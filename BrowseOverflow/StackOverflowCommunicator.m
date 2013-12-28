@@ -39,6 +39,10 @@
     fetchingConnection = [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
+- (void)fetchContentAtURL:(NSURL *)url completionHandler:(NSInteger)f errorHandler:(NSError**)error {
+    
+}
+
 -(void)cancelAndDiscardURLConnection {
     [fetchingConnection cancel];
     fetchingConnection = nil;

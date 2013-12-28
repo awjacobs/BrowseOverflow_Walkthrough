@@ -8,10 +8,17 @@
 
 #import <XCTest/XCTest.h>
 #import "InspectableStackOverflowCommunicator.h"
+#import "NonNetworkedStackOverflowCommunicator.h"
+#import "MockStackOverflowManager.h"
+#import "FakeURLResponse.h"
 
 @interface StackOverflowCommunicatorTests : XCTestCase
 {
     InspectableStackOverflowCommunicator *communicator;
+    NonNetworkedStackOverflowCommunicator *nnCommunicator;
+    MockStackOverflowManager *manager;
+    NSData *receivedData;
+    FakeURLResponse *fourOhFourResponse;
 }
 @end
 
@@ -21,8 +28,16 @@
 {
     [super setUp];
     communicator = [[InspectableStackOverflowCommunicator alloc]init];
+    nnCommunicator = [[NonNetworkedStackOverflowCommunicator alloc]init];
+    manager = [[MockStackOverflowManager alloc]init];
+    nnCommunicator.delegate = manager;
+    fourOhFourResponse = [[FakeURLResponse alloc]initWithStatusCode:404];
+    receivedData = [@"Result" dataUsingEncoding:NSUTF8StringEncoding];
 }
 
+-(void)tearDown {
+    [communicator cancelAndDiscardURLConnection];
+}
 
 - (void)testSearchingForQuestionsOnTopicCallsTopicAPI {
 
@@ -58,6 +73,19 @@
     [communicator searchForQuestionsWithTag:@"cocoa"];
     XCTAssertFalse([[communicator currentURLConnection] isEqual:firstConnection], @"The communicator needs to replace its URL connection to start a new one");
     [communicator cancelAndDiscardURLConnection];
+}
+
+- (void)testReceivingResponseDiscardsExistingData {
+    nnCommunicator.receivedData = [@"Hello" dataUsingEncoding:NSUTF8StringEncoding];
+    [nnCommunicator searchForQuestionsWithTag: @"ios"];
+    [nnCommunicator connection:nil didReceiveResponse:nil];
+    XCTAssertEqual([nnCommunicator.receivedData length], (NSUInteger)0, @"Data should have been discarded");
+}
+
+- (void)testReceivingResponseWith404StatusPassesErrorToDelegate {
+    [nnCommunicator searchForQuestionsWithTag:@"ios"];
+    [nnCommunicator connection:nil didReceiveResponse:(NSURLResponse*)fourOhFourResponse];
+    XCTAssertEqual([manager topicFailurErrorCode], 404, @"Fetch failure was passed through to delegate");
 }
 
 @end

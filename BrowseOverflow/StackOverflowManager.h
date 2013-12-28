@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "StackOverflowManagerDelegate.h"
+#import "StackOverflowCommunicatorDelegate.h"
 
 @class StackOverflowCommunicator;
 @class QuestionBuilder;
@@ -22,7 +23,8 @@ enum {
     StackOverflowManagerErrorAnswerFetchCode
 };
 
-@interface StackOverflowManager : NSObject
+@interface StackOverflowManager : NSObject<StackOverflowCommunicatorDelegate>
+
 @property (weak, nonatomic) id<StackOverflowManagerDelegate> delegate;
 @property (strong, nonatomic) StackOverflowCommunicator* communicator;
 @property (strong) QuestionBuilder *questionBuilder;
