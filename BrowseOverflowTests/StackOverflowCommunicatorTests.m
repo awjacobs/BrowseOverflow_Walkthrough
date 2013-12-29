@@ -85,7 +85,54 @@
 - (void)testReceivingResponseWith404StatusPassesErrorToDelegate {
     [nnCommunicator searchForQuestionsWithTag:@"ios"];
     [nnCommunicator connection:nil didReceiveResponse:(NSURLResponse*)fourOhFourResponse];
-    XCTAssertEqual([manager topicFailurErrorCode], 404, @"Fetch failure was passed through to delegate");
+    XCTAssertEqual([manager topicFailureErrorCode], 404, @"Fetch failure was passed through to delegate");
 }
 
+- (void)testNoErrorReceivedOn200Status {
+    FakeURLResponse *twoHundredResponse = [[FakeURLResponse alloc]initWithStatusCode:200];
+    [nnCommunicator searchForQuestionsWithTag:@"ios"];
+    [nnCommunicator connection:nil didReceiveResponse:(NSURLResponse *)twoHundredResponse];
+    XCTAssertFalse([manager topicFailureErrorCode] == 200, @"No need for error on 200 response");
+}
+
+#pragma mark - 
+#pragma mark Question List
+- (void)testConnectionFailingPassesErrorToDelegate {
+    [nnCommunicator searchForQuestionsWithTag:@"ios"];
+    NSError *error = [NSError errorWithDomain:@"Fake Domain" code:12345 userInfo:nil];
+    [nnCommunicator connection:nil didFailWithError:error];
+    XCTAssertEqual([manager topicFailureErrorCode], 12345, @"Failure to connect should get passed to the delegate");
+}
+
+- (void)testSuccessfulQuestionSearchPassesDataToDelegate {
+    [nnCommunicator searchForQuestionsWithTag: @"ios"];
+    [nnCommunicator setReceivedData: receivedData];
+    [nnCommunicator connectionDidFinishLoading:nil];
+    XCTAssertEqualObjects([manager topicSearchString], @"Result", @"The delegate should have received data on success");
+}
+
+#pragma mark Question Body
+- (void)testSuccessfulBodyDownloadPassesDataToDelegate {
+    [nnCommunicator downloadInformationForQuestionWithID:12345];
+    [nnCommunicator setReceivedData: receivedData];
+    [nnCommunicator connectionDidFinishLoading:nil];
+    XCTAssertEqualObjects([manager questionBodyString], @"Result", @"The delegate should have received data on success");
+}
+
+#pragma mark Answers
+- (void)testSuccessfulAnswerFetchPassesDataToDelegate {
+    [nnCommunicator downloadAnswersToQuestionWithID:12345];
+    [nnCommunicator setReceivedData:receivedData];
+    [nnCommunicator connectionDidFinishLoading:nil];
+    XCTAssertEqualObjects([manager answerListString], @"Result", @"The delegate should have received data on success");
+}
+#pragma mark -
+
+- (void)testAdditionalDataAppendedToDownload {
+    [nnCommunicator setReceivedData:receivedData];
+    NSData *extraData = [@" appended" dataUsingEncoding:NSUTF8StringEncoding];
+    [nnCommunicator connection:nil didReceiveData:extraData];
+    NSString *combinedString = [[NSString alloc]initWithData:[nnCommunicator receivedData] encoding:NSUTF8StringEncoding];
+    XCTAssertEqualObjects(combinedString, @"Result appended", @"Received data should be appended to the downloaded data.");
+}
 @end

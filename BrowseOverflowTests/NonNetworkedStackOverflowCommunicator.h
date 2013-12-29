@@ -9,5 +9,5 @@
 #import "StackOverflowCommunicator.h"
 
 @interface NonNetworkedStackOverflowCommunicator : StackOverflowCommunicator
-@property (strong, nonatomic) NSData *receivedData;
+@property (copy) NSData *receivedData;
 @end

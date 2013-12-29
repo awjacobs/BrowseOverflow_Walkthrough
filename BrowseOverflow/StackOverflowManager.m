@@ -51,7 +51,7 @@ NSString* StackOverflowManagerError = @"StackOverflowManagerError";
 
 -(void)fetchBodyForQuestion:(Question *)question {
     self.questionNeedingBody = question;
-    [self.communicator fetchBodyForQuestion:question];
+    [self.communicator downloadInformationForQuestionWithID:question.questionID];
 }
 
 -(void)receivedQuestionBodyJSON:(NSString *)objectNotation {

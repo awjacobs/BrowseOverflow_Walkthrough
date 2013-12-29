@@ -19,7 +19,7 @@
     wasAskedToFetchQuestions = YES;
 }
 
--(void)fetchBodyForQuestion:(Question *)question {
+-(void)downloadInformationForQuestionWithID:(NSInteger)identifier {
     wasAskedToFetchBody = YES;
 }
 

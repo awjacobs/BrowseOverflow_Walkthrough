@@ -9,5 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @protocol StackOverflowCommunicatorDelegate <NSObject>
+- (void)searchingForQuestionsFailedWithError: (NSError*)error;
+- (void)receivedQuestionsJSON:(NSString*)objectNotation;
 
+- (void)fetchingQuestionBodyFailedWithError: (NSError*)error;
+- (void)receivedQuestionBodyJSON:(NSString*)objectNotation;
+
+- (void)fetchingAnswersFailedWithError: (NSError *)error;
+- (void)receivedAnswerListJSON:(NSString *)objectNotation;
 @end

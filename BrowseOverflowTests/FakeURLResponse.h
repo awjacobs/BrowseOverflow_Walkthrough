@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FakeURLResponse : NSURLResponse
-- (id)initWithStatusCode:(NSInteger)statusCode;
+@interface FakeURLResponse : NSObject {
+    NSInteger statusCode;
+}
+- (id)initWithStatusCode:(NSInteger)code;
+- (NSInteger)statusCode;
 @end

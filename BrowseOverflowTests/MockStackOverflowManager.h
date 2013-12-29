@@ -7,7 +7,27 @@
 //
 
 #import "StackOverflowManager.h"
+#import "StackOverflowCommunicatorDelegate.h"
+@class Topic;
+@class Question;
 
-@interface MockStackOverflowManager : StackOverflowManager
-@property NSInteger topicFailurErrorCode;
+@interface MockStackOverflowManager : NSObject<StackOverflowCommunicatorDelegate>
+{
+    NSInteger topicFailureErrorCode;
+    NSInteger bodyFailureErrorCode;
+    NSInteger answerFailureErrorCode;
+    NSString *topicSearchString;
+    NSString *questionBodyString;
+    NSString *answerListString;
+}
+
+- (NSInteger)topicFailureErrorCode;
+- (NSInteger)bodyFailureErrorCode;
+- (NSInteger)answerFailureErrorCode;
+- (NSString *)topicSearchString;
+- (NSString *)questionBodyString;
+- (NSString *)answerListString;
+
+
+@property (strong) id delegate;
 @end

@@ -33,16 +33,11 @@ enum {
 
 //Fetch Question Headers
 - (void)fetchQuestionsOnTopic:(Topic *)topic;
-- (void)searchingForQuestionsFailedWithError: (NSError*)error;
-- (void)receivedQuestionsJSON:(NSString*)objectNotation;
 
 //Fetch Question Body
 - (void)fetchBodyForQuestion:(Question *)question;
-- (void)fetchingQuestionBodyFailedWithError: (NSError*)error;
-- (void)receivedQuestionBodyJSON:(NSString*)objectNotation;
 
 //Fetch Answers
 - (void)fetchAnswersForQuestion:(Question *)question;
-- (void)fetchingAnswersFailedWithError: (NSError *)error;
-- (void)receivedAnswerListJSON:(NSString *)objectNotation;
+
 @end
