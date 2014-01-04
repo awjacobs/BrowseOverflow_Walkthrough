@@ -1,5 +1,5 @@
 //
-//  EmptyTableViewDataSource.h
+//  TopicTableDataSource.h
 //  BrowseOverflow
 //
 //  Created by Aggrey Jacobs on 1/3/14.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EmptyTableViewDataSource : NSObject<UITableViewDataSource>
-
+@interface TopicTableDataSource : NSObject<UITableViewDataSource>
+@property (nonatomic) NSArray *topics;
 @end
