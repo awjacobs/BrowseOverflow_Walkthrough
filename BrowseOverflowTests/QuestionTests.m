@@ -63,7 +63,7 @@
 }
 
 - (void)testQuestionsKeepScore{
-    XCTAssertEqual(newQuestion.score, 42, @"Questions need a numeric score");
+    XCTAssertEqual(newQuestion.score, (NSInteger)42, @"Questions need a numeric score");
 }
 
 - (void)testQuestionHasATitle

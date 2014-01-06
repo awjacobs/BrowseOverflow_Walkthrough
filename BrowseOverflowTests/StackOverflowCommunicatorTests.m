@@ -85,7 +85,7 @@
 - (void)testReceivingResponseWith404StatusPassesErrorToDelegate {
     [nnCommunicator searchForQuestionsWithTag:@"ios"];
     [nnCommunicator connection:nil didReceiveResponse:(NSURLResponse*)fourOhFourResponse];
-    XCTAssertEqual([manager topicFailureErrorCode], 404, @"Fetch failure was passed through to delegate");
+    XCTAssertEqual([manager topicFailureErrorCode], (NSInteger)404, @"Fetch failure was passed through to delegate");
 }
 
 - (void)testNoErrorReceivedOn200Status {
@@ -101,7 +101,7 @@
     [nnCommunicator searchForQuestionsWithTag:@"ios"];
     NSError *error = [NSError errorWithDomain:@"Fake Domain" code:12345 userInfo:nil];
     [nnCommunicator connection:nil didFailWithError:error];
-    XCTAssertEqual([manager topicFailureErrorCode], 12345, @"Failure to connect should get passed to the delegate");
+    XCTAssertEqual([manager topicFailureErrorCode], (NSInteger)12345, @"Failure to connect should get passed to the delegate");
 }
 
 - (void)testSuccessfulQuestionSearchPassesDataToDelegate {

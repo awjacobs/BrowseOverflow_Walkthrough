@@ -11,7 +11,7 @@
 @class Question;
 extern NSString* QuestionBuilderErrorDomain;
 
-enum {
+NS_ENUM(NSInteger, QuestionBuilderErrors) {
     QuestionBuilderInvalidJSONError,
     QuestionBuilderMissingDataError
 };

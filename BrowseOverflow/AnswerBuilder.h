@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class Question;
 extern NSString *AnswerBuilderErrorDomain;
-enum {
+NS_ENUM(NSInteger, AnswerBuilderErrors) {
     AnswerBuilderInvalidJSONError,
     AnswerBuilderMissingDataError
 };

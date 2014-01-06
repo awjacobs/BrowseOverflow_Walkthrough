@@ -113,10 +113,10 @@ static NSString *emptyQuestionsArray = @"{ \"questions\": [] }";
 }
 
 - (void)testQuestionCreatedFromJSONHasPropertiesPresentedInJSON {
-    XCTAssertEqual(question.questionID, 2817980, @"The question ID should match the data we sent");
+    XCTAssertEqual(question.questionID, (NSInteger)2817980, @"The question ID should match the data we sent");
     XCTAssertEqual([question.date timeIntervalSince1970], (NSTimeInterval)1273660706, @"The date of the question should match the data.");
     XCTAssertEqualObjects(question.title, @"Why does Keychain Services return the wrong keychain content?", @"Title should match the provided data");
-    XCTAssertEqual(question.score, 2, @"Score should match the data.");
+    XCTAssertEqual(question.score, (NSInteger)2, @"Score should match the data.");
     Person* asker = question.asker;
     XCTAssertEqualObjects(asker.name, @"Graham Lee", @"Looks like I should have asked this question.");
     XCTAssertEqualObjects([asker.avatarURL absoluteString], @"http://www.gravatar.com/avatar/563290c0c1b776a315b36e863b388a0c",

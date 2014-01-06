@@ -17,7 +17,7 @@
 @class AnswerBuilder;
 
 extern NSString* StackOverflowManagerError;
-enum {
+NS_ENUM(NSInteger, StackOverflowManagerErrors) {
     StackOverflowManagerErrorQuestionSearchCode,
     StackOverflowManagerErrorBodyFetchCode,
     StackOverflowManagerErrorAnswerFetchCode

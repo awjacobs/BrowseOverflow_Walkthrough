@@ -36,7 +36,7 @@ NSString* StackOverflowCommunicatorErrorDomain = @"StackOverflowCommunicatorErro
 
 -(void)downloadInformationForQuestionWithID:(NSInteger)identifier {
     [self fetchContentAtURL:[NSURL URLWithString:
-                             [NSString stringWithFormat:@"%@%@%d%@", kAPIURL, kQuestionAPI, identifier, kBodyTrue]]
+                             [NSString stringWithFormat:@"%@%@%ld%@", kAPIURL, kQuestionAPI, (long)identifier, kBodyTrue]]
                errorHandler:^(NSError *error) {
                    [self.delegate fetchingQuestionBodyFailedWithError:error];
                }
@@ -47,7 +47,7 @@ NSString* StackOverflowCommunicatorErrorDomain = @"StackOverflowCommunicatorErro
 
 -(void)downloadAnswersToQuestionWithID:(NSInteger)identifier {
     [self fetchContentAtURL:[NSURL URLWithString:
-                             [NSString stringWithFormat:@"%@%@%d%@%@", kAPIURL, kQuestionAPI, identifier, kAnswerSearch,   kBodyTrue]]
+                             [NSString stringWithFormat:@"%@%@%ld%@%@", kAPIURL, kQuestionAPI, (long)identifier, kAnswerSearch,   kBodyTrue]]
                errorHandler:^(NSError *error) {
                    [self.delegate fetchingAnswersFailedWithError:error];
                }
